@@ -43,10 +43,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django_extensions',
-    'myproject.accounts.apps.AccountsConfig',
-    'myproject.core.apps.CoreConfig',
-    'myproject.crm.apps.CrmConfig',
-
+    'myproject.accounts',
+    'myproject.core',
+    'myproject.crm',
 ]
 
 MIDDLEWARE = [
