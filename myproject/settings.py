@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'myproject.crm.apps.CrmConfig',
     'jazzmin',
     'rest_framework',
+    'rest_framework.authtoken',
+    'myproject.company.apps.CompanyConfig',
 
 ]
 
@@ -142,3 +144,5 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
 }
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

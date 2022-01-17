@@ -8,6 +8,16 @@ from django.utils.translation import gettext_lazy as _
 
 from .managers import UserManager
 
+from django.conf import settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from rest_framework.authtoken.models import Token
+
+def upload_file_customer(instance, filename):
+    return f'{instance.name}-{filename}' #metodo de uploard de documentos
+
+
+
 
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email address'), unique=True)
@@ -69,3 +79,20 @@ class User(AbstractBaseUser, PermissionsMixin):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
         return self.is_admin
+    
+class Client(models.Model):
+    name = models.CharField(max_length=255)#, verbose_name = 'Nome')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    cpf = models.CharField('CPF',unique=True, max_length=14, blank=True, null=True)#, verbose_name = 'CPF')
+    email = models.EmailField(max_length=50, blank=True, null=True)
+    document = models.FileField(upload_to= 'meusarquivos', blank=False, null=True)
+    type = models.CharField(max_length=255, verbose_name = ('Tipo de Usuário'), blank=True, null=True)
+
+    def __str__(self):
+        return f'{self.user.username} - {self.cpf}'
+    
+
+    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
+    def create_auth_token(sender, instance=None, created=False, **kwargs):
+        if created:
+            Token.objects.create(user=instance)  
