@@ -35,6 +35,8 @@ AUTH_USER_MODEL = 'accounts.User'
 # Application definition
 
 INSTALLED_APPS = [
+    
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,6 +48,11 @@ INSTALLED_APPS = [
     'myproject.accounts.apps.AccountsConfig',
     'myproject.core.apps.CoreConfig',
     'myproject.crm.apps.CrmConfig',
+    'jazzmin',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'myproject.company.apps.CompanyConfig',
+
 ]
 
 MIDDLEWARE = [
@@ -131,6 +138,11 @@ DECIMAL_SEPARATOR = ','
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR.joinpath('staticfiles')
 
-LOGIN_URL = '/admin/login/'
-LOGIN_REDIRECT_URL = 'core:index'
-# LOGOUT_REDIRECT_URL = 'core:index'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
